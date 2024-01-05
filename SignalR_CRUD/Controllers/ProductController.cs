@@ -97,9 +97,9 @@ namespace SignalR_CRUD.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProdId,Name,Category")] Product product)
+        public async Task<IActionResult> Edit(int ProdId, [Bind("ProdId,Name,Category")] Product product)
         {
-            if (id != product.ProdId)
+            if (ProdId != product.ProdId)
             {
                 return NotFound();
             }
@@ -150,13 +150,13 @@ namespace SignalR_CRUD.Controllers
         // POST: Product/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int ProdId)
         {
             if (_context.Product == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.Product'  is null.");
             }
-            var product = await _context.Product.FindAsync(id);
+            var product = await _context.Product.FindAsync(ProdId);
             if (product != null)
             {
                 _context.Product.Remove(product);
