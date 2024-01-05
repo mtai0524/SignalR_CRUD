@@ -1,9 +1,13 @@
+using BlazorIntegrationInMVC.Data;
 using Microsoft.EntityFrameworkCore;
 using SignalR_CRUD.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddServerSideBlazor();
+builder.Services.AddSingleton<WeatherForecastService>();
+
 var services = builder.Services;
 services.AddDbContext<ApplicationDbContext>(options =>
 {
@@ -15,6 +19,8 @@ services.AddControllers().AddJsonOptions(options =>
 });
 services.AddRazorPages();
 services.AddSignalR();
+services.AddControllers();
+
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
@@ -37,5 +43,6 @@ app.UseEndpoints(endpoints =>
 
 });
 app.MapRazorPages();
+app.MapBlazorHub();
 
 app.Run();

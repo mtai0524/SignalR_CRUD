@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "vXZQHPM9fQe7yrR8YJB4UE+3ICvEWSj8EAwPV160Darh9kNEqwdWGWq+b84DHFeg+Ehd+/5ssJYVlroWXXBabQ==",
+  "dgSpecHash": "dK51QzbpQDzz1D613iOpSMomywVNu33nTEOVnQ2p5noy9Bj1+kkp6bWEofxpByL3aIq1fzDbZVrfAnUeix5maA==",
   "success": true,
-  "projectFilePath": "E:\\SignalR_CRUD\\SignalR_CRUD\\SignalR_CRUD.csproj",
+  "projectFilePath": "C:\\Users\\PC\\Downloads\\SignalR_CRUD-main\\SignalR_CRUD-main\\SignalR_CRUD\\SignalR_CRUD.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\PC\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",

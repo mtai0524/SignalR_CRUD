@@ -1,0 +1,102 @@
+﻿@using SignalR_CRUD.Models;
+<h3>Product Management</h3>
+<p>This component demonstrates fetching data from a service.</p>
+
+@if (products == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Category</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in products)
+            {
+                <tr>
+                    <td>@product.Name</td>
+                    <td>@product.Category</td>
+                    <td>
+                        <button @onclick="() => EditProduct(product)">Edit</button>
+                        <button @onclick="() => DeleteProduct(product)">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<div>
+    <input @bind="newProductName" placeholder="Name" />
+    <input @bind="newProductCategory" placeholder="Category" />
+    <button @onclick="AddProduct">Add Product</button>
+    <button @onclick="UpdateProduct">Update Product</button>
+</div>
+
+@code {
+    private List<Product> products;
+    private string newProductName;
+    private string newProductCategory;
+    private Product editingProduct;
+
+    [Inject]
+    private ApplicationDbContext ApplicationDbContext { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadProducts();
+    }
+
+    private async Task LoadProducts()
+    {
+        products = ApplicationDbContext.Product.ToList();
+    }
+
+    private void EditProduct(Product product)
+    {
+        editingProduct = product;
+        newProductName = product.Name;
+        newProductCategory = product.Category;
+    }
+
+    private async Task AddProduct()
+    {
+        var newProduct = new Product { Name = newProductName, Category = newProductCategory };
+        ApplicationDbContext.Product.Add(newProduct);
+        await ApplicationDbContext.SaveChangesAsync();
+        await LoadProducts();
+        ClearForm();
+    }
+
+    private async Task UpdateProduct()
+    {
+        if (editingProduct != null)
+        {
+            editingProduct.Name = newProductName;
+            editingProduct.Category = newProductCategory;
+            await ApplicationDbContext.SaveChangesAsync();
+            await LoadProducts();
+            ClearForm();
+        }
+    }
+
+    private async Task DeleteProduct(Product product)
+    {
+        ApplicationDbContext.Product.Remove(product);
+        await ApplicationDbContext.SaveChangesAsync();
+        await LoadProducts();
+    }
+
+    private void ClearForm()
+    {
+        newProductName = string.Empty;
+        newProductCategory = string.Empty;
+        editingProduct = null;
+    }
+}
