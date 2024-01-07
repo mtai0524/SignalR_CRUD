@@ -1,4 +1,5 @@
 using BlazorIntegrationInMVC.Data;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using SignalR_CRUD.Models;
 
@@ -20,7 +21,13 @@ services.AddControllers().AddJsonOptions(options =>
 services.AddRazorPages();
 services.AddSignalR();
 services.AddControllers();
-
+services.AddResponseCompression(options =>
+{
+    options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[]
+    {
+        "application/octet-stream"
+    });
+});
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
@@ -42,6 +49,8 @@ app.UseEndpoints(endpoints =>
     endpoints.MapHub<SignalrServer>("/signalrServer");
 
 });
+app.UseResponseCompression();
+app.UseHttpsRedirection();
 app.MapRazorPages();
 app.MapBlazorHub();
 

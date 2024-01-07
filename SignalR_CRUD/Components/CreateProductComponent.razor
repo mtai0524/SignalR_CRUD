@@ -1,0 +1,38 @@
+﻿@page "/createproduct"
+@using Microsoft.AspNetCore.Components.Web.Extensions
+@using SignalR_CRUD.Models
+
+<h3>Create Product</h3>
+
+<div>
+    <label>Name:</label>
+    <input @bind="productName" />
+</div>
+
+<div>
+    <label>Category:</label>
+    <input @bind="productCategory" />
+</div>
+
+<button @onclick="CreateProduct">Create</button>
+<a href="/product">Back to Product List</a>
+
+@code {
+    private string productName;
+    private string productCategory;
+
+    [Inject]
+    private ApplicationDbContext ApplicationDbContext { get; set; }
+
+    [Inject]
+    private NavigationManager NavigationManager { get; set; }
+
+    private async Task CreateProduct()
+    {
+        var newProduct = new Product { Name = productName, Category = productCategory };
+        ApplicationDbContext.Product.Add(newProduct);
+        await ApplicationDbContext.SaveChangesAsync();
+
+        NavigationManager.NavigateTo("/product");
+    }
+}

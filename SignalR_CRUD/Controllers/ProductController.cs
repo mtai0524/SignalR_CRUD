@@ -14,12 +14,14 @@ namespace SignalR_CRUD.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IHubContext<SignalrServer> _signalrHub;
-
+   
         public ProductController(ApplicationDbContext context, IHubContext<SignalrServer> signalrHub)
         {
             _context = context;
             _signalrHub = signalrHub;
         }
+
+
         [HttpGet]
         public IActionResult GetProducts()
         {

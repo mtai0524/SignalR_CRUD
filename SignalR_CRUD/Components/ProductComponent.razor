@@ -1,4 +1,8 @@
-﻿@using SignalR_CRUD.Models;
+﻿@page "/product"
+@using Microsoft.AspNetCore.Components.Web.Extensions
+@using Microsoft.AspNetCore.SignalR.Client
+@using SignalR_CRUD.Models
+
 <h3>Product Management</h3>
 <p>This component demonstrates fetching data from a service.</p>
 
@@ -36,6 +40,10 @@ else
     <input @bind="newProductName" placeholder="Name" />
     <input @bind="newProductCategory" placeholder="Category" />
     <button @onclick="AddProduct">Add Product</button>
+    <button @onclick="NavigateToCreateProduct">Create</button>
+    <p>
+        <a href="@($"{NavigationManager.BaseUri}Product/Create")">Create New DI</a>
+    </p>
     <button @onclick="UpdateProduct">Update Product</button>
 </div>
 
@@ -44,18 +52,42 @@ else
     private string newProductName;
     private string newProductCategory;
     private Product editingProduct;
+    private HubConnection hubConnection;
 
     [Inject]
     private ApplicationDbContext ApplicationDbContext { get; set; }
 
+    [Inject]
+    private NavigationManager NavigationManager { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
         await LoadProducts();
+
+        hubConnection = new HubConnectionBuilder()
+            .WithUrl(NavigationManager.ToAbsoluteUri("/signalrServer"))
+            .Build();
+
+        hubConnection.On("LoadProducts", async () =>
+        {
+        try
+        {
+            await LoadProducts();
+        }
+        catch (Exception ex)
+        {
+            // Log or handle the exception as needed
+            Console.WriteLine($"Error loading products: {ex.Message}");
+        }
+    });
+        await hubConnection.StartAsync();
     }
+
 
     private async Task LoadProducts()
     {
         products = ApplicationDbContext.Product.ToList();
+        await InvokeAsync(() => StateHasChanged());
     }
 
     private void EditProduct(Product product)
@@ -70,7 +102,9 @@ else
         var newProduct = new Product { Name = newProductName, Category = newProductCategory };
         ApplicationDbContext.Product.Add(newProduct);
         await ApplicationDbContext.SaveChangesAsync();
-        await LoadProducts();
+
+        await hubConnection.SendAsync("LoadProducts");
+
         ClearForm();
     }
 
@@ -81,7 +115,9 @@ else
             editingProduct.Name = newProductName;
             editingProduct.Category = newProductCategory;
             await ApplicationDbContext.SaveChangesAsync();
-            await LoadProducts();
+
+            await hubConnection.SendAsync("LoadProducts");
+
             ClearForm();
         }
     }
@@ -90,7 +126,8 @@ else
     {
         ApplicationDbContext.Product.Remove(product);
         await ApplicationDbContext.SaveChangesAsync();
-        await LoadProducts();
+
+        await hubConnection.SendAsync("LoadProducts");
     }
 
     private void ClearForm()
@@ -98,5 +135,9 @@ else
         newProductName = string.Empty;
         newProductCategory = string.Empty;
         editingProduct = null;
+    }
+    private void NavigateToCreateProduct()
+    {
+        NavigationManager.NavigateTo("/createproduct");
     }
 }
