@@ -7,5 +7,6 @@ namespace SignalR_CRUD.Models
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) 
             : base(options) { }
         public virtual DbSet<Product> Product { get; set; }
+        public virtual DbSet<Person> Person { get; set; }
     }
 }

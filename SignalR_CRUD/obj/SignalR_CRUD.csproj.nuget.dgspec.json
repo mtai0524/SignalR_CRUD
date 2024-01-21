@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\SaveGit\\SignalR_CRUD\\SignalR_CRUD\\SignalR_CRUD.csproj": {}
+    "E:\\SignalR_CRUD\\SignalR_CRUD\\SignalR_CRUD.csproj": {}
   },
   "projects": {
-    "E:\\SaveGit\\SignalR_CRUD\\SignalR_CRUD\\SignalR_CRUD.csproj": {
+    "E:\\SignalR_CRUD\\SignalR_CRUD\\SignalR_CRUD.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\SaveGit\\SignalR_CRUD\\SignalR_CRUD\\SignalR_CRUD.csproj",
+        "projectUniqueName": "E:\\SignalR_CRUD\\SignalR_CRUD\\SignalR_CRUD.csproj",
         "projectName": "SignalR_CRUD",
-        "projectPath": "E:\\SaveGit\\SignalR_CRUD\\SignalR_CRUD\\SignalR_CRUD.csproj",
+        "projectPath": "E:\\SignalR_CRUD\\SignalR_CRUD\\SignalR_CRUD.csproj",
         "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
-        "outputPath": "E:\\SaveGit\\SignalR_CRUD\\SignalR_CRUD\\obj\\",
+        "outputPath": "E:\\SignalR_CRUD\\SignalR_CRUD\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -46,21 +46,21 @@
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[6.0.25, )"
+              "version": "[7.0.11, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[6.0.25, )"
+              "version": "[7.0.11, )"
             },
             "Microsoft.EntityFrameworkCore.Sqlite": {
               "target": "Package",
-              "version": "[6.0.23, )"
+              "version": "[6.0.26, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[6.0.25, )"
+              "version": "[7.0.11, )"
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
@@ -98,7 +98,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }
