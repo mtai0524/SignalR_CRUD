@@ -1,7 +1,9 @@
 ﻿@page "/product-list"
 @using Microsoft.AspNetCore.Components.Web.Extensions
+@using Microsoft.AspNetCore.SignalR
 @using Microsoft.AspNetCore.SignalR.Client
 @using SignalR_CRUD.Models
+@inject IHubContext<SignalrServer> HubContext
 
 <h3>Product Management</h3>
 <p>This component demonstrates fetching data from a service.</p>
@@ -59,33 +61,50 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        await LoadProducts();
-
         hubConnection = new HubConnectionBuilder()
             .WithUrl(NavigationManager.ToAbsoluteUri("/signalrServer"))
             .Build();
 
-        hubConnection.On("LoadProducts", async () =>
+        hubConnection.On<List<Product>>("ReceiveProducts", receivedProducts =>
         {
+            InvokeAsync(() =>
+            {
+                products = receivedProducts;
+                StateHasChanged();
+            });
+        });
+
         try
         {
+            await hubConnection.StartAsync();
+            Console.WriteLine("SignalR connection started successfully.");
             await LoadProducts();
         }
         catch (Exception ex)
         {
-            // Log or handle the exception as needed
-            Console.WriteLine($"Error loading products: {ex.Message}");
+            Console.WriteLine($"Error starting SignalR connection: {ex.Message}");
         }
-    });
-        await hubConnection.StartAsync();
-    }
 
+        await base.OnInitializedAsync();
+    }
 
     private async Task LoadProducts()
     {
-        products = ApplicationDbContext.Product.ToList();
-        await InvokeAsync(() => StateHasChanged());
+        try
+        {
+            products = ApplicationDbContext.Product.ToList();
+            await HubContext.Clients.All.SendAsync("ReceiveProducts", products);
+            StateHasChanged(); // Luu data da thay doi
+            Console.WriteLine("Products loaded successfully.");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading products: {ex.Message}");
+        }
     }
+
+
+
 
     private void EditProduct(Product product)
     {
@@ -93,6 +112,8 @@ else
         newProductName = product.Name;
         newProductCategory = product.Category;
     }
+
+
 
     private async Task AddProduct()
     {
