@@ -33,6 +33,6 @@
         ApplicationDbContext.Product.Add(newProduct);
         await ApplicationDbContext.SaveChangesAsync();
 
-        NavigationManager.NavigateTo("/product");
+        NavigationManager.NavigateTo("/product-list");
     }
 }

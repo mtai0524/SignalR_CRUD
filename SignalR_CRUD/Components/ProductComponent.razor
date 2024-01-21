@@ -1,4 +1,4 @@
-﻿@page "/product"
+﻿@page "/product-list"
 @using Microsoft.AspNetCore.Components.Web.Extensions
 @using Microsoft.AspNetCore.SignalR.Client
 @using SignalR_CRUD.Models
@@ -40,10 +40,7 @@ else
     <input @bind="newProductName" placeholder="Name" />
     <input @bind="newProductCategory" placeholder="Category" />
     <button @onclick="AddProduct">Add Product</button>
-    <button @onclick="NavigateToCreateProduct">Create</button>
-    <p>
-        <a href="@($"{NavigationManager.BaseUri}Product/Create")">Create New DI</a>
-    </p>
+    <button @onclick="NavigateToCreateProduct">Create component</button>
     <button @onclick="UpdateProduct">Update Product</button>
 </div>
 

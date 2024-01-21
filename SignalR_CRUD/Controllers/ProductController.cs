@@ -20,7 +20,10 @@ namespace SignalR_CRUD.Controllers
             _context = context;
             _signalrHub = signalrHub;
         }
-
+        public IActionResult Blazor()
+        {
+            return View("_Host");
+        }
 
         [HttpGet]
         public IActionResult GetProducts()

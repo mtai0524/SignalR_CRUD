@@ -47,11 +47,10 @@ app.UseEndpoints(endpoints =>
         name: "default",
         pattern: "{controller=Home}/{action=Index}/{id?}");
     endpoints.MapHub<SignalrServer>("/signalrServer");
-
 });
 app.UseResponseCompression();
 app.UseHttpsRedirection();
 app.MapRazorPages();
 app.MapBlazorHub();
-
+app.MapFallbackToController("Blazor", "Home");
 app.Run();
