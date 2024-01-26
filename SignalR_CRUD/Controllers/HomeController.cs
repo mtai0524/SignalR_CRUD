@@ -18,7 +18,7 @@ namespace SignalR_CRUD.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            return View("_Host");
         }
 
         public IActionResult Privacy()

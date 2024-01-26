@@ -1,6 +1,8 @@
 using BlazorIntegrationInMVC.Data;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
+using SignalR_CRUD.Components;
 using SignalR_CRUD.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -52,5 +54,5 @@ app.UseResponseCompression();
 app.UseHttpsRedirection();
 app.MapRazorPages();
 app.MapBlazorHub();
-app.MapFallbackToController("Blazor", "Home");
+app.MapFallbackToController("Blazor", "Product");
 app.Run();
